@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+.label {
+	display: inline-block;
+	overflow: hidden;
+	box-sizing: border-box;
+	object-fit: contain;
+	position: relative;
+	background-color: white;
+
+	width: var(--label-width);
+	height: var(--label-height);
+
+	margin-right: var(--label-horizontal-spacing);
+	margin-bottom: var(--label-vertical-spacing);
+}
+
+/* a convenience class: apply to a label element to make it light grey; for testing printer alignment with the stickers. */
+.test {
+	background-color: rgb(230, 230, 230);
+}
+
+body {
+	font-size: 0px; /* ignore anything text (whitespace, etc) outside of the spans */
+	margin:  0;
+	padding: 0;
+	border:  0;
+	max-width: var(--page-width);
+}
+
+@page {
+	margin-top: var(--top-margin);
+	margin-left: var(--left-margin);
+
+	/* This should be whatever's left over on the page after all the labels. However, on label
+	sheets like the Avery 5167 where the bottom margin equals the label height, setting the margin
+	to 0px would allow an extra label in; setting the margin to its exact value means that minor
+	arithmetic errors cause the last row of labels to erroneously wrap to the next page. This
+	calculated value should prevent either case from happening.*/
+	margin-bottom: calc(var(--bottom-margin) - (var(--label) / 2));
+	/* The right margin will be page width minus however many labels fit.*/
+	margin-right:  0in;
+	/*padding:  -0.0625in;*/
+}
+
+
+@media print {
+	body {
+		background-color: white;
+	}
+
+	.dontuse {
+		background: white;
+		opacity: 0;
+	}
+}
+@media screen {
+	body {
+		/* On screen, show a light-grey background everywhere that isn't a sticker.
+		   Also show a faint line at the right edge of the page. */
+		background-color: silver;
+		box-shadow: inset 0 0 0 100in #f8f8f8;
+
+		/* Make the content appear on screen roughly like it would on the page*/
+		box-sizing: border-box;
+		padding-top:  var(--top-margin);
+		padding-left: var(--left-margin);
+		padding-bottom:  var(--bottom-margin);
+		width:  var(--page-width);
+		min-height: var(--page-height);
+	}
+
+	/* On screen, a light red cross-hatch pattern on dontuse labels.*/
+	.dontuse {
+		background: lightyellow;
+		box-shadow: inset 0.1pt 0pt 0.1pt #0008, inset -0.1pt 0pt 0.1pt #0008;
+		opacity: 100%;
+	}
+}

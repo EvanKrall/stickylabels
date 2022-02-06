@@ -1,0 +1,31 @@
+@charset "UTF-8";
+@import url('labels.css');
+
+:root {
+	--page-width: 8.5in;
+	--page-height: 11in;
+
+	--top-margin: 0.5in;
+	--left-margin:  0.3125in;
+	--bottom-margin: 0.5in;
+
+	--label-width: 1.75in;
+	--label-height: 0.5in;
+	--label-horizontal-spacing: 0.2916in;
+	--label-vertical-spacing: 0in;
+
+}
+/* Annoyingly, @page doesn't inherit variables from :root, so we have to duplicate the margin variables here. */
+@page {
+	--top-margin: 0.5in;
+	--left-margin:  0.3125in;
+	--bottom-margin: 0.5in;
+	size: letter;
+}
+
+.label {
+	border-radius: 2mm;
+	font-size: 0.1in;
+	padding: 0.1in;
+}
+
